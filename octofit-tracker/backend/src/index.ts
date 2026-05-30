@@ -1,6 +1,6 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import apiRouter from './routes';
+import { MONGODB_URI, connectDB } from './config/database';
 
 const app = express();
 const PORT = Number(process.env.PORT || 8000);
@@ -21,9 +21,9 @@ app.get('/', (req, res) => {
   });
 });
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit')
+connectDB()
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB at', MONGODB_URI);
     console.log(`API URL: ${API_URL}`);
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
