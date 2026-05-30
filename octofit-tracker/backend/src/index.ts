@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.json({ message: 'OctoFit Tracker API is running.' });
+  res.json({ message: 'OctoFit Tracker API is running. ' });
 });
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit')
