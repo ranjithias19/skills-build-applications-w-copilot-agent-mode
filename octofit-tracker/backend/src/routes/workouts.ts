@@ -1,19 +1,16 @@
 import { Router } from 'express';
+import Workout from '../models/workout';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({
-    message: 'List workouts route placeholder',
-    workouts: [],
-  });
+router.get('/', async (req, res) => {
+  const workouts = await Workout.find().populate('user').lean();
+  res.json(workouts);
 });
 
-router.post('/', (req, res) => {
-  res.status(201).json({
-    message: 'Create workout route placeholder',
-    workout: req.body,
-  });
+router.post('/', async (req, res) => {
+  const workout = await Workout.create(req.body);
+  res.status(201).json(workout);
 });
 
 export default router;

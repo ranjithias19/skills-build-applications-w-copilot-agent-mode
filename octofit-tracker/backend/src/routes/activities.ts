@@ -1,19 +1,16 @@
 import { Router } from 'express';
+import Activity from '../models/activity';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({
-    message: 'List activities route placeholder',
-    activities: [],
-  });
+router.get('/', async (req, res) => {
+  const activities = await Activity.find().populate('user').lean();
+  res.json(activities);
 });
 
-router.post('/', (req, res) => {
-  res.status(201).json({
-    message: 'Create activity route placeholder',
-    activity: req.body,
-  });
+router.post('/', async (req, res) => {
+  const activity = await Activity.create(req.body);
+  res.status(201).json(activity);
 });
 
 export default router;

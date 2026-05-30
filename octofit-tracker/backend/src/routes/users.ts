@@ -1,19 +1,16 @@
 import { Router } from 'express';
+import User from '../models/user';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({
-    message: 'List users route placeholder',
-    users: [],
-  });
+router.get('/', async (req, res) => {
+  const users = await User.find().lean();
+  res.json(users);
 });
 
-router.post('/', (req, res) => {
-  res.status(201).json({
-    message: 'Create user route placeholder',
-    user: req.body,
-  });
+router.post('/', async (req, res) => {
+  const user = await User.create(req.body);
+  res.status(201).json(user);
 });
 
 export default router;

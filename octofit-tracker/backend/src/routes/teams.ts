@@ -1,19 +1,16 @@
 import { Router } from 'express';
+import Team from '../models/team';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({
-    message: 'List teams route placeholder',
-    teams: [],
-  });
+router.get('/', async (req, res) => {
+  const teams = await Team.find().populate('members').lean();
+  res.json(teams);
 });
 
-router.post('/', (req, res) => {
-  res.status(201).json({
-    message: 'Create team route placeholder',
-    team: req.body,
-  });
+router.post('/', async (req, res) => {
+  const team = await Team.create(req.body);
+  res.status(201).json(team);
 });
 
 export default router;
